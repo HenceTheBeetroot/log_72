@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://ckbp3vgdsqpsx"]
+
+[ext_resource type="FontFile" uid="uid://btvmi0bmvvbiw" path="res://fonts/manaspace/manaspc.ttf" id="1_udcql"]
+
+[resource]
+font = ExtResource("1_udcql")
+font_size = 40
+font_color = Color(0.85, 0.85, 0.85, 1)
+shadow_size = 0

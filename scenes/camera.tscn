@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1dmauvrhmem0"]
+
+[ext_resource type="Shader" path="res://addons/post_processing/shaders/chromatic.gdshader" id="1_oo0aq"]
+[ext_resource type="Script" path="res://scenes/menu/shader.gd" id="2_52e3y"]
+[ext_resource type="Shader" path="res://addons/post_processing/shaders/grain.gdshader" id="3_xha6h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkl4i"]
+shader = ExtResource("1_oo0aq")
+shader_parameter/offset = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5krcw"]
+shader = ExtResource("3_xha6h")
+shader_parameter/strength = 55.0
+
+[node name="Camera" type="Camera2D"]
+anchor_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Draw" type="CanvasLayer" parent="."]
+
+[node name="ChromAberr" type="ColorRect" parent="Draw"]
+material = SubResource("ShaderMaterial_fkl4i")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_52e3y")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Grain" type="ColorRect" parent="Draw"]
+material = SubResource("ShaderMaterial_5krcw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_52e3y")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true

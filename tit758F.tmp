@@ -1,0 +1,99 @@
+[gd_scene load_steps=8 format=3 uid="uid://o2d2trqiusfy"]
+
+[ext_resource type="LabelSettings" uid="uid://ckbp3vgdsqpsx" path="res://titletext.tres" id="1_3r1tl"]
+[ext_resource type="Script" path="res://title.gd" id="1_uc468"]
+[ext_resource type="Shader" path="res://addons/post_processing/shaders/chromatic.gdshader" id="2_7krp7"]
+[ext_resource type="LabelSettings" uid="uid://cituas1oceyt0" path="res://titlebuttontext.tres" id="2_oxl1m"]
+[ext_resource type="Shader" path="res://addons/post_processing/shaders/grain.gdshader" id="3_ugy2r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wk5jo"]
+shader = ExtResource("2_7krp7")
+shader_parameter/offset = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34anu"]
+shader = ExtResource("3_ugy2r")
+shader_parameter/strength = 55.0
+
+[node name="Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uc468")
+metadata/_edit_lock_ = true
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Draw" type="CanvasLayer" parent="Camera"]
+
+[node name="ChromAbber" type="ColorRect" parent="Camera/Draw"]
+material = SubResource("ShaderMaterial_wk5jo")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grain" type="ColorRect" parent="Camera/Draw"]
+material = SubResource("ShaderMaterial_34anu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backsplash" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.0624, 0.08, 0.0767733, 1)
+metadata/_edit_lock_ = true
+
+[node name="Title" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 30.0
+offset_top = 60.0
+offset_right = 156.0
+offset_bottom = 105.0
+text = "log 72"
+label_settings = ExtResource("1_3r1tl")
+
+[node name="Buttons" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 460.0
+offset_right = 70.0
+offset_bottom = 500.0
+
+[node name="Continue" type="Label" parent="Buttons"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 31.0
+text = "last saved page"
+label_settings = ExtResource("2_oxl1m")
+metadata/_edit_lock_ = true
+
+[node name="New" type="Label" parent="Buttons"]
+visible = false
+layout_mode = 0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 81.0
+text = "chapter select"
+label_settings = ExtResource("2_oxl1m")
+metadata/_edit_lock_ = true
+
+[node name="Options" type="Label" parent="Buttons"]
+visible = false
+layout_mode = 0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 131.0
+text = "options"
+label_settings = ExtResource("2_oxl1m")
+metadata/_edit_lock_ = true

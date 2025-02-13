@@ -1,0 +1,78 @@
+[gd_resource type="VisualShader" load_steps=8 format=3 uid="uid://btx8422gw1k7r"]
+
+[sub_resource type="Gradient" id="Gradient_e2iqp"]
+offsets = PackedFloat32Array(0, 0.321875, 1)
+colors = PackedColorArray(0.214762, 0.111754, 0.0318465, 1, 0.340599, 0.25432, 0.100354, 0, 0, 0, 0, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g7gkd"]
+frequency = 0.0055
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ny122"]
+seamless = true
+color_ramp = SubResource("Gradient_e2iqp")
+noise = SubResource("FastNoiseLite_g7gkd")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_r8koh"]
+expanded_output_ports = [0]
+source = 1
+texture = SubResource("NoiseTexture2D_ny122")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_tkfto"]
+expanded_output_ports = [0]
+texture = SubResource("NoiseTexture2D_ny122")
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_p1jlt"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(1, 1, 1, 1), 2, Quaternion(0.5, 0.5, 0.5, 0.5)]
+op_type = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_o81k0"]
+input_name = "uv"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform sampler2D screen_tex_frg_3 : hint_screen_texture;
+uniform sampler2D tex_frg_4;
+
+
+
+void fragment() {
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(screen_tex_frg_3, SCREEN_UV);
+	float n_out3p4 = n_out3p0.a;
+
+
+// Input:6
+	vec2 n_out6p0 = UV;
+
+
+// Texture2D:4
+	vec4 n_out4p0 = texture(tex_frg_4, n_out6p0);
+	float n_out4p4 = n_out4p0.a;
+
+
+// Mix:5
+	vec4 n_out5p0 = mix(n_out3p0, n_out4p0, vec4(n_out4p4));
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out5p0.xyz);
+	COLOR.a = n_out3p4;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(600, 160)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_r8koh")
+nodes/fragment/3/position = Vector2(-20, 40)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_tkfto")
+nodes/fragment/4/position = Vector2(-20, 280)
+nodes/fragment/5/node = SubResource("VisualShaderNodeMix_p1jlt")
+nodes/fragment/5/position = Vector2(300, 40)
+nodes/fragment/6/node = SubResource("VisualShaderNodeInput_o81k0")
+nodes/fragment/6/position = Vector2(-860, 280)
+nodes/fragment/connections = PackedInt32Array(3, 0, 5, 0, 4, 4, 5, 2, 4, 0, 5, 1, 5, 0, 0, 0, 3, 4, 0, 1, 6, 0, 4, 0)

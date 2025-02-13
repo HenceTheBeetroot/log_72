@@ -1,0 +1,154 @@
+[gd_scene load_steps=10 format=3 uid="uid://o2d2trqiusfy"]
+
+[ext_resource type="Script" path="res://scenes/menu/title.gd" id="1_lnqk8"]
+[ext_resource type="Script" path="res://scenes/menu/screen.gd" id="1_ov4ac"]
+[ext_resource type="Shader" path="res://addons/post_processing/shaders/chromatic.gdshader" id="2_fle0a"]
+[ext_resource type="Shader" path="res://addons/post_processing/shaders/grain.gdshader" id="3_bv1xy"]
+[ext_resource type="LabelSettings" uid="uid://ckbp3vgdsqpsx" path="res://scenes/menu/title.tres" id="4_pjyxi"]
+[ext_resource type="LabelSettings" uid="uid://cituas1oceyt0" path="res://scenes/menu/genericmenu.tres" id="5_7nbda"]
+[ext_resource type="Script" path="res://scenes/menu/options.gd" id="7_dphcp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wk5jo"]
+shader = ExtResource("2_fle0a")
+shader_parameter/offset = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34anu"]
+shader = ExtResource("3_bv1xy")
+shader_parameter/strength = 55.0
+
+[node name="Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ov4ac")
+metadata/_edit_lock_ = true
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Draw" type="CanvasLayer" parent="Camera"]
+
+[node name="ChromAbber" type="ColorRect" parent="Camera/Draw"]
+material = SubResource("ShaderMaterial_wk5jo")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Grain" type="ColorRect" parent="Camera/Draw"]
+material = SubResource("ShaderMaterial_34anu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Backsplash" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.0624, 0.08, 0.0767733, 1)
+metadata/_edit_lock_ = true
+
+[node name="Title" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_lnqk8")
+
+[node name="Title" type="Label" parent="Title"]
+visible = false
+layout_mode = 0
+offset_left = 30.0
+offset_top = 60.0
+offset_right = 192.0
+offset_bottom = 105.0
+text = "log 72"
+label_settings = ExtResource("4_pjyxi")
+
+[node name="Buttons" type="Control" parent="Title"]
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 460.0
+offset_right = 70.0
+offset_bottom = 500.0
+
+[node name="Continue" type="Label" parent="Title/Buttons"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 31.0
+text = "last saved page"
+label_settings = ExtResource("5_7nbda")
+metadata/_edit_lock_ = true
+
+[node name="New" type="Label" parent="Title/Buttons"]
+visible = false
+layout_mode = 0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 81.0
+text = "chapter select"
+label_settings = ExtResource("5_7nbda")
+metadata/_edit_lock_ = true
+
+[node name="Options" type="Label" parent="Title/Buttons"]
+visible = false
+layout_mode = 0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 131.0
+text = "options"
+label_settings = ExtResource("5_7nbda")
+metadata/_edit_lock_ = true
+
+[node name="Options" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_dphcp")
+
+[node name="Buttons" type="Control" parent="Options"]
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 460.0
+offset_right = 70.0
+offset_bottom = 500.0
+
+[node name="Option1" type="Label" parent="Options/Buttons"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 31.0
+text = "last saved page"
+label_settings = ExtResource("5_7nbda")
+metadata/_edit_lock_ = true
+
+[node name="Option2" type="Label" parent="Options/Buttons"]
+visible = false
+layout_mode = 0
+offset_top = 50.0
+offset_right = 300.0
+offset_bottom = 81.0
+text = "chapter select"
+label_settings = ExtResource("5_7nbda")
+metadata/_edit_lock_ = true
+
+[node name="Back" type="Label" parent="Options/Buttons"]
+visible = false
+layout_mode = 0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 131.0
+text = "options"
+label_settings = ExtResource("5_7nbda")
+metadata/_edit_lock_ = true

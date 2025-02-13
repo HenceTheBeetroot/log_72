@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://wg6r2a6okgoo"]
+
+[ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_p1mgr"]
+[ext_resource type="Script" path="res://scenes/entity/handler/sight_handler.gd" id="2_2ghg6"]
+[ext_resource type="Script" path="res://scenes/entity/handler/hitbox_handler.gd" id="2_wpg62"]
+[ext_resource type="Script" path="res://scenes/entity/state/player_move.gd" id="3_0oism"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cq8pw"]
+height = 40.0
+
+[node name="Test_Enemy" instance=ExtResource("1_p1mgr")]
+
+[node name="HitboxHandler" type="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CapsuleShape2D_cq8pw")
+script = ExtResource("2_wpg62")
+
+[node name="PlayerMove" type="Node" parent="StateHandler" index="0"]
+script = ExtResource("3_0oism")
+MAXSPEED = 200.0
+
+[node name="SightHandler" type="Node2D" parent="." index="2"]
+script = ExtResource("2_2ghg6")
