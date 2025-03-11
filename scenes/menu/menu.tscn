@@ -1,16 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://o2d2trqiusfy"]
 
-[ext_resource type="Script" path="res://scenes/menu/menu_manager.gd" id="1_75sxy"]
-[ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_lnqk8"]
+[ext_resource type="Script" uid="uid://clwoxtinlf0t8" path="res://scenes/menu/menu_manager.gd" id="1_75sxy"]
+[ext_resource type="Script" uid="uid://dbgrclltb58tl" path="res://scenes/menu/menu.gd" id="1_lnqk8"]
 [ext_resource type="LabelSettings" uid="uid://ckbp3vgdsqpsx" path="res://fonts/title.tres" id="4_pjyxi"]
 [ext_resource type="LabelSettings" uid="uid://cituas1oceyt0" path="res://fonts/genericmenu.tres" id="5_7nbda"]
 [ext_resource type="Texture2D" uid="uid://dla5ff5khqtx3" path="res://images/godot.png" id="6_tplnv"]
-[ext_resource type="Script" path="res://scenes/menu/screen_button.gd" id="7_ogrjg"]
-[ext_resource type="Script" path="res://scenes/menu/quit_button.gd" id="9_5sveq"]
-[ext_resource type="Script" path="res://scenes/menu/scene_button.gd" id="9_qlueu"]
-[ext_resource type="Script" path="res://scenes/menu/toggle_button.gd" id="9_yv34b"]
+[ext_resource type="Script" uid="uid://bar8np464uto6" path="res://scenes/menu/screen_button.gd" id="7_ogrjg"]
+[ext_resource type="Script" uid="uid://bfyjhnhmgwxct" path="res://scenes/menu/quit_button.gd" id="9_5sveq"]
+[ext_resource type="Script" uid="uid://cgnvtlagkpfgm" path="res://scenes/menu/scene_button.gd" id="9_qlueu"]
+[ext_resource type="Script" uid="uid://pjer7dew8ui8" path="res://scenes/menu/toggle_button.gd" id="9_yv34b"]
 [ext_resource type="AudioStream" uid="uid://hy75jfdi2hlq" path="res://music/the final entry.wav" id="10_rg048"]
-[ext_resource type="Script" path="res://scenes/menu/placeholder_button.gd" id="11_c0ala"]
+[ext_resource type="Script" uid="uid://by0xo0u3fw7js" path="res://scenes/menu/placeholder_button.gd" id="11_c0ala"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3

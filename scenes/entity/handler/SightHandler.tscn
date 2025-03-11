@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://wji2d64iwtqa"]
 
-[ext_resource type="Script" path="res://scenes/entity/handler/sight_handler.gd" id="1_hftra"]
+[ext_resource type="Script" uid="uid://dh6na3x5h2u6h" path="res://scenes/entity/handler/sight_handler.gd" id="1_hftra"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lt5qs"]
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://b1dmauvrhmem0"]
 
-[ext_resource type="Shader" path="res://addons/post_processing/shaders/chromatic.gdshader" id="1_oo0aq"]
-[ext_resource type="Script" path="res://scenes/menu/shader.gd" id="2_52e3y"]
-[ext_resource type="Shader" path="res://addons/post_processing/shaders/grain.gdshader" id="3_xha6h"]
+[ext_resource type="Shader" uid="uid://c0efqmpujv6h" path="res://addons/post_processing/shaders/chromatic.gdshader" id="1_oo0aq"]
+[ext_resource type="Script" uid="uid://beue7uiwg85y4" path="res://scenes/menu/shader.gd" id="2_52e3y"]
+[ext_resource type="Shader" uid="uid://dt3uyinwmhew0" path="res://addons/post_processing/shaders/grain.gdshader" id="3_xha6h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fkl4i"]
 shader = ExtResource("1_oo0aq")
