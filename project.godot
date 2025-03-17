@@ -23,6 +23,12 @@ Universal="*res://universal.gd"
 
 window/stretch/mode="viewport"
 
+[global_group]
+
+state_entity=""
+player_main=""
+entity=""
+
 [input]
 
 up={

@@ -1,11 +1,11 @@
 extends Node
 class_name State
 
-func In():
-	pass
+func In() -> bool:
+	return true
 
-func Out():
-	pass
+func Out() -> bool:
+	return true
 
 func Condition() -> bool:
 	return false

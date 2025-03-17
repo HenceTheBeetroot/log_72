@@ -1,11 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://du1whc1t3xmsr"]
+[gd_scene load_steps=2 format=3 uid="uid://du1whc1t3xmsr"]
 
 [ext_resource type="Script" uid="uid://d4j3uwcmhoqm4" path="res://scenes/entity/entity.gd" id="1_vgic1"]
-[ext_resource type="Script" uid="uid://bds1ijein6myi" path="res://scenes/entity/handler/state_handler.gd" id="2_kg4qe"]
 
 [node name="Entity" type="CharacterBody2D"]
 motion_mode = 1
+platform_on_leave = 2
+platform_floor_layers = 0
 script = ExtResource("1_vgic1")
-
-[node name="StateHandler" type="Node" parent="."]
-script = ExtResource("2_kg4qe")

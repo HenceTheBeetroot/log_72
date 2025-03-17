@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://csiay2we48wfr"]
+[gd_scene load_steps=6 format=3 uid="uid://csiay2we48wfr"]
 
 [ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_oorfy"]
-[ext_resource type="Script" uid="uid://ikcvmekryi5l" path="res://scenes/entity/handler/hitbox_handler.gd" id="2_303ra"]
+[ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/entity/handler/HitboxHandler.tscn" id="2_poj5f"]
 [ext_resource type="Script" uid="uid://dypwt2wapl0pc" path="res://scenes/entity/state/player_move.gd" id="3_no6j4"]
+[ext_resource type="PackedScene" uid="uid://dsrs2lohe8ust" path="res://scenes/entity/handler/StateHandler.tscn" id="3_poj5f"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_asnkb"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_tgyl1"]
 
-[node name="Player" instance=ExtResource("1_oorfy")]
+[node name="Player" groups=["player_main"] instance=ExtResource("1_oorfy")]
 
-[node name="HitboxHandler" type="CollisionShape2D" parent="." index="0"]
-shape = SubResource("CircleShape2D_asnkb")
-script = ExtResource("2_303ra")
+[node name="HitboxHandler" parent="." index="0" instance=ExtResource("2_poj5f")]
+shape = SubResource("CircleShape2D_tgyl1")
+
+[node name="StateHandler" parent="." index="1" instance=ExtResource("3_poj5f")]
 
 [node name="PlayerMove" type="Node" parent="StateHandler" index="0"]
 script = ExtResource("3_no6j4")

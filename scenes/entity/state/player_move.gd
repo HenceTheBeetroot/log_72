@@ -10,7 +10,6 @@ func _ready() -> void:
 func Condition():
 	return owner.velocity or Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized()
 
-func PhysicsProcess(delta: float):
+func Process(delta: float):
 	var direction = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized()
-	owner.velocity = owner.velocity.move_toward(direction * MAXSPEED, MOMENTUM)	
-	owner.move_and_slide()
+	owner.velocity = owner.velocity.move_toward(direction * MAXSPEED, MOMENTUM)

@@ -151,6 +151,8 @@ tile_set = SubResource("TileSet_1m6dy")
 [node name="Player" parent="." instance=ExtResource("1_73pot")]
 position = Vector2(22, 68)
 motion_mode = 0
+platform_on_leave = 0
+platform_floor_layers = 4294967295
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position_smoothing_enabled = true
@@ -166,5 +168,7 @@ text = "bingus"
 [node name="Test_Enemy" parent="." instance=ExtResource("4_cwh77")]
 position = Vector2(136, 159)
 motion_mode = 0
+platform_on_leave = 0
+platform_floor_layers = 4294967295
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
