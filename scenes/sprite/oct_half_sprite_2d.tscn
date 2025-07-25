@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsmk5jwamy134"]
+
+[ext_resource type="Script" uid="uid://dpnfkcgqgp0d8" path="res://scenes/sprite/oct_half_sprite_2d.gd" id="1_fosbn"]
+
+[node name="OctHalfSprite2D" type="Sprite2D"]
+script = ExtResource("1_fosbn")

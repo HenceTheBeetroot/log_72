@@ -1,3 +1,4 @@
 extends Node
 
-var DEBUG = true
+# DEBUG
+var show_entity_states = false

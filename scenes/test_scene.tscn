@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=4 uid="uid://d35wa0m6xtyry"]
 
-[ext_resource type="PackedScene" uid="uid://csiay2we48wfr" path="res://scenes/entity/player.tscn" id="1_73pot"]
+[ext_resource type="PackedScene" uid="uid://csiay2we48wfr" path="res://scenes/entity/entity/player/player.tscn" id="1_73pot"]
 [ext_resource type="Texture2D" uid="uid://d232kanoq2hrs" path="res://images/tile.png" id="2_7lfna"]
 [ext_resource type="Texture2D" uid="uid://cb7gu78ywp83x" path="res://images/tileset.png" id="2_fb5wv"]
-[ext_resource type="PackedScene" uid="uid://wg6r2a6okgoo" path="res://scenes/entity/test_enemy.tscn" id="4_cwh77"]
+[ext_resource type="PackedScene" uid="uid://wg6r2a6okgoo" path="res://scenes/entity/entity/test_enemy/test_enemy.tscn" id="4_cwh77"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8w2uu"]
 texture = ExtResource("2_7lfna")
@@ -116,7 +116,8 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSet" id="TileSet_1m6dy"]
 tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 0
 terrain_set_0/mode = 2
 terrain_set_0/terrain_0/name = "Connection Test"
 terrain_set_0/terrain_0/color = Color(0, 0, 0, 1)
@@ -132,7 +133,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 "
 

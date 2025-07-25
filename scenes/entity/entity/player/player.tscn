@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://csiay2we48wfr"]
+
+[ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_oorfy"]
+[ext_resource type="Script" uid="uid://4hqqs7kl4msc" path="res://scenes/entity/entity/player/player.gd" id="2_j8jve"]
+[ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/handler/entity/hitbox/HitboxHandler.tscn" id="2_poj5f"]
+[ext_resource type="Script" uid="uid://dypwt2wapl0pc" path="res://scenes/entity/state/player_move.gd" id="3_no6j4"]
+[ext_resource type="PackedScene" uid="uid://dsrs2lohe8ust" path="res://scenes/handler/entity/state/StateHandler.tscn" id="3_poj5f"]
+[ext_resource type="Script" uid="uid://cfxwwrx4aj1x2" path="res://scenes/handler/sprite/sprite_handler.gd" id="5_j8jve"]
+[ext_resource type="Texture2D" uid="uid://c4uh7cmfg283d" path="res://images/character_sprite_test.png" id="6_j8jve"]
+[ext_resource type="Script" uid="uid://dpnfkcgqgp0d8" path="res://scenes/sprite/oct_half_sprite_2d.gd" id="7_veg5d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tgyl1"]
+
+[node name="Player" node_paths=PackedStringArray("sprite_handler") groups=["player_main"] instance=ExtResource("1_oorfy")]
+script = ExtResource("2_j8jve")
+sprite_handler = NodePath("SpriteHandler")
+
+[node name="StateHandler" parent="." index="0" instance=ExtResource("3_poj5f")]
+
+[node name="PlayerMove" type="Node" parent="StateHandler" index="0"]
+script = ExtResource("3_no6j4")
+
+[node name="SpriteHandler" type="Node2D" parent="." index="1"]
+script = ExtResource("5_j8jve")
+metadata/_custom_type_script = "uid://cfxwwrx4aj1x2"
+
+[node name="Legs" type="Sprite2D" parent="SpriteHandler" index="0"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_j8jve")
+hframes = 3
+vframes = 5
+region_enabled = true
+region_rect = Rect2(180, 0, 540, 900)
+script = ExtResource("7_veg5d")
+default = 1
+animation_data = "run=[0,1,2,1]"
+metadata/_custom_type_script = "uid://dpnfkcgqgp0d8"
+
+[node name="Body" type="Sprite2D" parent="SpriteHandler" index="1"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_j8jve")
+vframes = 5
+region_enabled = true
+region_rect = Rect2(0, 0, 180, 900)
+script = ExtResource("7_veg5d")
+metadata/_custom_type_script = "uid://dpnfkcgqgp0d8"
+
+[node name="HitboxHandler" parent="." index="2" instance=ExtResource("2_poj5f")]
+shape = SubResource("CircleShape2D_tgyl1")
