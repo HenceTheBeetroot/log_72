@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=4 uid="uid://d35wa0m6xtyry"]
 
 [ext_resource type="PackedScene" uid="uid://csiay2we48wfr" path="res://scenes/entity/entity/player/player.tscn" id="1_73pot"]
+[ext_resource type="Texture2D" uid="uid://djtkkvy84uf36" path="res://images/lab_walls.png" id="2_7ddre"]
 [ext_resource type="Texture2D" uid="uid://d232kanoq2hrs" path="res://images/tile.png" id="2_7lfna"]
-[ext_resource type="Texture2D" uid="uid://cb7gu78ywp83x" path="res://images/tileset.png" id="2_fb5wv"]
 [ext_resource type="PackedScene" uid="uid://wg6r2a6okgoo" path="res://scenes/entity/entity/test_enemy/test_enemy.tscn" id="4_cwh77"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8w2uu"]
@@ -15,7 +15,7 @@ tile_size = Vector2i(64, 48)
 sources/0 = SubResource("TileSetAtlasSource_8w2uu")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vtpg2"]
-texture = ExtResource("2_fb5wv")
+texture = ExtResource("2_7ddre")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -151,6 +151,7 @@ tile_set = SubResource("TileSet_1m6dy")
 
 [node name="Player" parent="." instance=ExtResource("1_73pot")]
 position = Vector2(22, 68)
+collision_mask = 3
 motion_mode = 0
 platform_on_leave = 0
 platform_floor_layers = 4294967295
@@ -168,8 +169,7 @@ text = "bingus"
 
 [node name="Test_Enemy" parent="." instance=ExtResource("4_cwh77")]
 position = Vector2(136, 159)
+collision_mask = 3
 motion_mode = 0
 platform_on_leave = 0
 platform_floor_layers = 4294967295
-
-[node name="CanvasModulate" type="CanvasModulate" parent="."]

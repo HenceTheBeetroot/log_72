@@ -1,30 +1,29 @@
-[gd_scene load_steps=10 format=3 uid="uid://csiay2we48wfr"]
+[gd_scene load_steps=12 format=3 uid="uid://csiay2we48wfr"]
 
 [ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_oorfy"]
 [ext_resource type="Script" uid="uid://4hqqs7kl4msc" path="res://scenes/entity/entity/player/player.gd" id="2_j8jve"]
-[ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/handler/entity/hitbox/HitboxHandler.tscn" id="2_poj5f"]
-[ext_resource type="Script" uid="uid://dypwt2wapl0pc" path="res://scenes/entity/state/player_move.gd" id="3_no6j4"]
-[ext_resource type="PackedScene" uid="uid://dsrs2lohe8ust" path="res://scenes/handler/entity/state/StateHandler.tscn" id="3_poj5f"]
-[ext_resource type="Script" uid="uid://cfxwwrx4aj1x2" path="res://scenes/handler/sprite/sprite_handler.gd" id="5_j8jve"]
+[ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/module/manager/entity/collision/HitboxManager.tscn" id="2_poj5f"]
+[ext_resource type="Script" uid="uid://cfxwwrx4aj1x2" path="res://scenes/module/manager/sprite/main.gd" id="5_j8jve"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="5_opbk0"]
 [ext_resource type="Texture2D" uid="uid://c4uh7cmfg283d" path="res://images/character_sprite_test.png" id="6_j8jve"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="6_oq7h7"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="7_ak7fh"]
 [ext_resource type="Script" uid="uid://dpnfkcgqgp0d8" path="res://scenes/sprite/oct_half_sprite_2d.gd" id="7_veg5d"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="8_fbjcd"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tgyl1"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_veg5d"]
 
-[node name="Player" node_paths=PackedStringArray("sprite_handler") groups=["player_main"] instance=ExtResource("1_oorfy")]
+[node name="Player" node_paths=PackedStringArray("sprite_manager", "state_chart") groups=["player_main"] instance=ExtResource("1_oorfy")]
 script = ExtResource("2_j8jve")
-sprite_handler = NodePath("SpriteHandler")
+sprite_manager = NodePath("SpriteManager")
+state_chart = NodePath("StateChart")
 
-[node name="StateHandler" parent="." index="0" instance=ExtResource("3_poj5f")]
-
-[node name="PlayerMove" type="Node" parent="StateHandler" index="0"]
-script = ExtResource("3_no6j4")
-
-[node name="SpriteHandler" type="Node2D" parent="." index="1"]
+[node name="SpriteManager" type="Node2D" parent="." index="0"]
+visible = false
 script = ExtResource("5_j8jve")
 metadata/_custom_type_script = "uid://cfxwwrx4aj1x2"
 
-[node name="Legs" type="Sprite2D" parent="SpriteHandler" index="0"]
+[node name="Legs" type="Sprite2D" parent="SpriteManager" index="0"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("6_j8jve")
 hframes = 3
@@ -36,7 +35,7 @@ default = 1
 animation_data = "run=[0,1,2,1]"
 metadata/_custom_type_script = "uid://dpnfkcgqgp0d8"
 
-[node name="Body" type="Sprite2D" parent="SpriteHandler" index="1"]
+[node name="Body" type="Sprite2D" parent="SpriteManager" index="1"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("6_j8jve")
 vframes = 5
@@ -45,5 +44,35 @@ region_rect = Rect2(0, 0, 180, 900)
 script = ExtResource("7_veg5d")
 metadata/_custom_type_script = "uid://dpnfkcgqgp0d8"
 
-[node name="HitboxHandler" parent="." index="2" instance=ExtResource("2_poj5f")]
-shape = SubResource("CircleShape2D_tgyl1")
+[node name="HitboxManager" parent="." index="1" instance=ExtResource("2_poj5f")]
+shape = SubResource("CircleShape2D_veg5d")
+
+[node name="StateChart" type="Node" parent="." index="2"]
+script = ExtResource("5_opbk0")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Behavior" type="Node" parent="StateChart" index="0"]
+script = ExtResource("6_oq7h7")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Behavior" index="0"]
+script = ExtResource("7_ak7fh")
+
+[node name="MovementInput" type="Node" parent="StateChart/Behavior/Idle" index="0"]
+script = ExtResource("8_fbjcd")
+to = NodePath("../../Running")
+event = &"movement_input"
+delay_in_seconds = "0.0"
+
+[node name="Running" type="Node" parent="StateChart/Behavior" index="1"]
+script = ExtResource("7_ak7fh")
+
+[node name="NoMovementInput" type="Node" parent="StateChart/Behavior/Running" index="0"]
+script = ExtResource("8_fbjcd")
+to = NodePath("../../Idle")
+event = &"no_movement_input"
+delay_in_seconds = "0.0"
+
+[connection signal="state_entered" from="StateChart/Behavior/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_entered" from="StateChart/Behavior/Running" to="." method="_on_running_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Behavior/Running" to="." method="_on_running_state_physics_processing"]

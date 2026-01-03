@@ -49,7 +49,7 @@ func _ready():
 	# Parse animation data
 	for animation in animation_data.split(";", false):
 		var full_data := animation.split("=")
-		var name := full_data[0]
+		var anim_name := full_data[0]
 		var data := full_data[1]
 		var data_array: Array[int] = []
 		if data.contains("["):
@@ -57,14 +57,14 @@ func _ready():
 			if data.contains("-"):
 				var start = int(data.substr(0, data.find("-")))
 				var end = int(data.substr(data.find("-") + 1))
-				for frame in range(start, end + 1):
-					data_array.append(frame)
+				for anim_frame in range(start, end + 1):
+					data_array.append(anim_frame)
 			else:
-				for frame in data.split(","):
-					data_array.append(int(frame))
+				for anim_frame in data.split(","):
+					data_array.append(int(anim_frame))
 		else:
 			data_array = [int(data)]
-		animations.set(name, data_array)
+		animations.set(anim_name, data_array)
 
 func loop():
 	frame_coords.x = current_animation[current_frame]
@@ -78,7 +78,7 @@ func end_animation():
 	current_animation = [default]
 	current_frame = 0
 
-func _process(delta):
+func _process(_delta):
 	# Determines the appropriate sprite given the angle
 	# Multiplied by 4.99 instead of 5 so that up (PI) returns 0 (up sprite) instead of -1 (invalid sprite)
 	frame_coords.y = 4 - floor(4.99 * angle / PI)

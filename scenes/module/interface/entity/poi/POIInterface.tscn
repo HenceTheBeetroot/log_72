@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu1mm5q5ff6ag"]
+
+[ext_resource type="Script" uid="uid://cbm2ioltxq5ui" path="res://scenes/module/interface/entity/poi/main.gd" id="1_04u8c"]
+
+[node name="POIHandler" type="Node"]
+script = ExtResource("1_04u8c")

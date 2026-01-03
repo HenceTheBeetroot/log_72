@@ -1,4 +1,6 @@
 extends Node
 
 # DEBUG
-var show_entity_states = false
+var show_entity_states = true
+var render_pois = true
+var render_sightlines = true

@@ -15,7 +15,7 @@ func _ready() -> void:
 	if Universal.show_entity_states: # displays current entity state in debug mode
 		debug_text = Label.new()
 		debug_text.text = "UNDEFINED"
-		owner.add_child.call_deferred(debug_text)
+		owner.call_deferred("add_child", debug_text)
 
 func _process(delta: float) -> void:
 	if ACTIVE: # if there is a current state
@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 					ACTIVE.Process(delta) # run new state
 				break
 	if Universal.show_entity_states:
-		debug_text.text = (ACTIVE.name if ACTIVE else "NULL")
+		debug_text.text = String(ACTIVE.name) if ACTIVE else "NULL"
 
 func _physics_process(delta: float) -> void:
 	if ACTIVE: ACTIVE.PhysicsProcess(delta)

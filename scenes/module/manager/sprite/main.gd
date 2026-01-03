@@ -1,5 +1,5 @@
 extends Node2D
-class_name SpriteHandler
+class_name SpriteManager
 
 var sprites : Dictionary[String, Sprite2D] = {}
 

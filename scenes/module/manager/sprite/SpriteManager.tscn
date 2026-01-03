@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cmcujfr3djdcb"]
 
-[ext_resource type="Script" uid="uid://cfxwwrx4aj1x2" path="res://scenes/handler/sprite/sprite_handler.gd" id="1_qfqmf"]
+[ext_resource type="Script" uid="uid://cfxwwrx4aj1x2" path="res://scenes/module/manager/sprite/main.gd" id="1_qfqmf"]
 
 [node name="SpriteHandler" type="Node2D"]
 script = ExtResource("1_qfqmf")

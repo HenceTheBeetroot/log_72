@@ -1,2 +1,2 @@
 extends CollisionShape2D
-class_name HitboxHandler
+class_name HitboxManager

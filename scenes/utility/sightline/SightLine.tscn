@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwflp51rtycxi"]
+
+[ext_resource type="Script" uid="uid://ciesp1xhd8mkg" path="res://scenes/utility/sightline/main.gd" id="1_gyd2w"]
+
+[node name="Sightline" type="RayCast2D"]
+collision_mask = 2
+hit_from_inside = true
+script = ExtResource("1_gyd2w")

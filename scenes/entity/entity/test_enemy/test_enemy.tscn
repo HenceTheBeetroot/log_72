@@ -1,29 +1,66 @@
-[gd_scene load_steps=7 format=3 uid="uid://wg6r2a6okgoo"]
+[gd_scene load_steps=12 format=3 uid="uid://wg6r2a6okgoo"]
 
 [ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_p1mgr"]
-[ext_resource type="Script" uid="uid://dh6na3x5h2u6h" path="res://scenes/handler/entity/sight/sight_handler.gd" id="2_2ghg6"]
-[ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/handler/entity/hitbox/HitboxHandler.tscn" id="2_s7bmi"]
-[ext_resource type="Script" uid="uid://duahsd68kqc3p" path="res://scenes/entity/state/track_player.gd" id="3_s7bmi"]
-[ext_resource type="PackedScene" uid="uid://dsrs2lohe8ust" path="res://scenes/handler/entity/state/StateHandler.tscn" id="4_s7bmi"]
+[ext_resource type="Script" uid="uid://bjtyy83mx7gre" path="res://scenes/entity/entity/test_enemy/test_enemy.gd" id="2_ni8nv"]
+[ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/module/manager/entity/collision/HitboxManager.tscn" id="2_s7bmi"]
+[ext_resource type="PackedScene" uid="uid://b7eyipcnapwys" path="res://scenes/module/manager/entity/entity_tracker/EntityTrackerManager.tscn" id="4_jjt7w"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="4_ksmgp"]
+[ext_resource type="PackedScene" uid="uid://wji2d64iwtqa" path="res://scenes/module/interface/entity/area/AreaInterface.tscn" id="4_ni8nv"]
+[ext_resource type="PackedScene" uid="uid://cu1mm5q5ff6ag" path="res://scenes/module/interface/entity/poi/POIInterface.tscn" id="5_ksmgp"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="5_ni8nv"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="6_jjt7w"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="7_6g4md"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s7bmi"]
-height = 40.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ni8nv"]
 
-[node name="Test_Enemy" instance=ExtResource("1_p1mgr")]
+[node name="Test_Enemy" node_paths=PackedStringArray("tracker", "state_chart") instance=ExtResource("1_p1mgr")]
 wall_min_slide_angle = 0.0872665
+script = ExtResource("2_ni8nv")
+tracker = NodePath("EntityTrackerManager")
+state_chart = NodePath("StateChart")
 
-[node name="HitboxHandler" parent="." index="0" instance=ExtResource("2_s7bmi")]
-shape = SubResource("CapsuleShape2D_s7bmi")
+[node name="HitboxManager" parent="." index="0" instance=ExtResource("2_s7bmi")]
+shape = SubResource("CapsuleShape2D_ni8nv")
 
-[node name="SightHandler" type="Node2D" parent="." index="1"]
-script = ExtResource("2_2ghg6")
-distance = 200.0
-metadata/_custom_type_script = "uid://dh6na3x5h2u6h"
+[node name="EntityTrackerManager" parent="." index="1" node_paths=PackedStringArray("area_interface", "poi_interface") instance=ExtResource("4_jjt7w")]
+area_interface = NodePath("../AreaInterface")
+poi_interface = NodePath("../POIInterface")
 
-[node name="StateHandler" parent="." index="2" instance=ExtResource("4_s7bmi")]
+[node name="AreaInterface" parent="." index="2" instance=ExtResource("4_ni8nv")]
+radius = 250.0
 
-[node name="TrackPlayer" type="Node" parent="StateHandler" index="0" node_paths=PackedStringArray("sight_handler")]
-script = ExtResource("3_s7bmi")
-sight_handler = NodePath("../../SightHandler")
-MAXSPEED = 200.0
-metadata/_custom_type_script = "uid://duahsd68kqc3p"
+[node name="POIInterface" parent="." index="3" instance=ExtResource("5_ksmgp")]
+
+[node name="StateChart" type="Node" parent="." index="4"]
+script = ExtResource("4_ksmgp")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Behavior" type="Node" parent="StateChart" index="0"]
+script = ExtResource("5_ni8nv")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="Idle" type="Node" parent="StateChart/Behavior" index="0"]
+script = ExtResource("6_jjt7w")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="TargetAdded" type="Node" parent="StateChart/Behavior/Idle" index="0"]
+script = ExtResource("7_6g4md")
+to = NodePath("../../Targeting")
+event = &"target_added"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Targeting" type="Node" parent="StateChart/Behavior" index="1"]
+script = ExtResource("6_jjt7w")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="AllTargetsLost" type="Node" parent="StateChart/Behavior/Targeting" index="0"]
+script = ExtResource("7_6g4md")
+to = NodePath("../../Idle")
+event = &"all_targets_lost"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[connection signal="state_entered" from="StateChart/Behavior/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_entered" from="StateChart/Behavior/Targeting" to="." method="_on_target_in_area_state_entered"]

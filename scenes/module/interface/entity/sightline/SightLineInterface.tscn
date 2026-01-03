@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmsh176lxqcq0"]
+
+[ext_resource type="Script" uid="uid://dwbxtrri1hovw" path="res://scenes/module/interface/entity/sightline/main.gd" id="1_i8q35"]
+
+[node name="SightLineInterface" type="Node2D"]
+script = ExtResource("1_i8q35")

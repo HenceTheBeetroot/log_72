@@ -8,9 +8,9 @@ colors = PackedColorArray(0.214762, 0.111754, 0.0318465, 1, 0.340599, 0.25432, 0
 frequency = 0.0055
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ny122"]
-seamless = true
-color_ramp = SubResource("Gradient_e2iqp")
 noise = SubResource("FastNoiseLite_g7gkd")
+color_ramp = SubResource("Gradient_e2iqp")
+seamless = true
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_r8koh"]
 expanded_output_ports = [0]
