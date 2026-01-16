@@ -2,17 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vfbywtgh66nb"
-path="res://.godot/imported/state_chart.svg-5c268dd045b20d73dfacd5cdf7606676.ctex"
+uid="uid://bfd7u4w6jpjoe"
+path="res://.godot/imported/tiles.png-84fe310afb7621568c477bf904ca3113.ctex"
 metadata={
-"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_state_charts/state_chart.svg"
-dest_files=["res://.godot/imported/state_chart.svg-5c268dd045b20d73dfacd5cdf7606676.ctex"]
+source_file="res://images/tiles.png"
+dest_files=["res://.godot/imported/tiles.png-84fe310afb7621568c477bf904ca3113.ctex"]
 
 [params]
 
@@ -39,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=true
-editor/convert_colors_with_editor_theme=false

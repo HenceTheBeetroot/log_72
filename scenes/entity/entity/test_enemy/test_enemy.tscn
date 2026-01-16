@@ -11,7 +11,8 @@
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="6_jjt7w"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="7_6g4md"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ni8nv"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ni8nv"]
+radius = 16.0
 
 [node name="Test_Enemy" node_paths=PackedStringArray("tracker", "state_chart") instance=ExtResource("1_p1mgr")]
 wall_min_slide_angle = 0.0872665
@@ -20,7 +21,7 @@ tracker = NodePath("EntityTrackerManager")
 state_chart = NodePath("StateChart")
 
 [node name="HitboxManager" parent="." index="0" instance=ExtResource("2_s7bmi")]
-shape = SubResource("CapsuleShape2D_ni8nv")
+shape = SubResource("CircleShape2D_ni8nv")
 
 [node name="EntityTrackerManager" parent="." index="1" node_paths=PackedStringArray("area_interface", "poi_interface") instance=ExtResource("4_jjt7w")]
 area_interface = NodePath("../AreaInterface")
@@ -58,9 +59,13 @@ metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 [node name="AllTargetsLost" type="Node" parent="StateChart/Behavior/Targeting" index="0"]
 script = ExtResource("7_6g4md")
 to = NodePath("../../Idle")
-event = &"all_targets_lost"
+event = &"all_targets_removed"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
+[connection signal="target_added" from="EntityTrackerManager" to="." method="_on_entity_tracker_manager_target_added"]
+[connection signal="target_removed" from="EntityTrackerManager" to="." method="_on_entity_tracker_manager_target_removed"]
 [connection signal="state_entered" from="StateChart/Behavior/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_processing" from="StateChart/Behavior/Idle" to="." method="_on_idle_state_processing"]
 [connection signal="state_entered" from="StateChart/Behavior/Targeting" to="." method="_on_target_in_area_state_entered"]
+[connection signal="state_processing" from="StateChart/Behavior/Targeting" to="." method="_on_targeting_state_processing"]

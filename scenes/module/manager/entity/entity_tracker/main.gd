@@ -1,6 +1,10 @@
 extends Node2D
 class_name EntityTrackerManager
 
+signal target_added(name)
+signal target_removed(name)
+signal all_targets_removed
+
 @export var area_interface: AreaInterface
 @export var poi_interface: POIInterface
 
@@ -15,6 +19,9 @@ func _process(_delta: float) -> void:
 	for body in tracked_bodies.keys():
 		# if line of sight exists to a body
 		if !tracked_bodies[body].is_colliding():
+			# emit signal if target is being added
+			if poi_interface.get_poi(body.name) == null:
+				target_added.emit(body.name)
 			# add/update poi
 			poi_interface.update_poi(body.name, body.position, true)
 		else:
@@ -27,6 +34,10 @@ func _process(_delta: float) -> void:
 	for poi in poi_interface.get_all_pois():
 		if (poi.global_position - global_position).length() < 10:
 			poi.queue_free()
+			target_removed.emit(poi.name)
+			if poi_interface.get_all_pois().size() == 1:
+				all_targets_removed.emit()
+				
 
 func body_entered(body: PhysicsBody2D) -> void:
 	if body == get_parent(): return

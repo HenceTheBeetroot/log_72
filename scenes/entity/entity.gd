@@ -2,16 +2,15 @@ extends CharacterBody2D
 class_name Entity
 
 var debug_text: Label
+var data_entries = DataEntries.new()
+var facing = Vector2.DOWN
 
 func _ready() -> void:
-	# the editor isn't working for some reason so i gotta do this here like a PLEBIAN
-	set_collision_layer_value(1, true)
-	set_collision_layer_value(2, false)
-	set_collision_mask_value(1, false)
-	set_collision_mask_value(2, true)
+	# the editor isn't working for some reason so I gotta do this here like a PLEBIAN
+	set_collision_layer_value(1, true) # You are an entity
+	set_collision_mask_value(1, false) # Do not scan entities
+	set_collision_layer_value(2, false) # You are not a wall
+	set_collision_mask_value(2, true) # Scan walls
 	
 	set_motion_mode(MOTION_MODE_FLOATING) # set top-down physics
-	if Universal.show_entity_states: # displays current entity state in debug mode
-		debug_text = Label.new()
-		debug_text.text = "UNDEFINED"
-		call_deferred("add_child", debug_text)
+	add_child(data_entries) # stores data labels

@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://csiay2we48wfr"]
+[gd_scene load_steps=13 format=3 uid="uid://csiay2we48wfr"]
 
 [ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_oorfy"]
 [ext_resource type="Script" uid="uid://4hqqs7kl4msc" path="res://scenes/entity/entity/player/player.gd" id="2_j8jve"]
 [ext_resource type="PackedScene" uid="uid://dpstaj6iojehn" path="res://scenes/module/manager/entity/collision/HitboxManager.tscn" id="2_poj5f"]
 [ext_resource type="Script" uid="uid://cfxwwrx4aj1x2" path="res://scenes/module/manager/sprite/main.gd" id="5_j8jve"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="5_opbk0"]
-[ext_resource type="Texture2D" uid="uid://c4uh7cmfg283d" path="res://images/character_sprite_test.png" id="6_j8jve"]
+[ext_resource type="Texture2D" uid="uid://r3hu1l17rc2q" path="res://images/character_sprite_test.png" id="6_j8jve"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="6_oq7h7"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="7_ak7fh"]
 [ext_resource type="Script" uid="uid://dpnfkcgqgp0d8" path="res://scenes/sprite/oct_half_sprite_2d.gd" id="7_veg5d"]
+[ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="8_46ruu"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="8_fbjcd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_veg5d"]
@@ -51,28 +52,72 @@ shape = SubResource("CircleShape2D_veg5d")
 script = ExtResource("5_opbk0")
 metadata/_custom_type_script = "uid://couw105c3bde4"
 
-[node name="Behavior" type="Node" parent="StateChart" index="0"]
+[node name="Main" type="Node" parent="StateChart" index="0"]
+script = ExtResource("8_46ruu")
+
+[node name="Action" type="Node" parent="StateChart/Main" index="0"]
 script = ExtResource("6_oq7h7")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateChart/Behavior" index="0"]
+[node name="DashInput" type="Node" parent="StateChart/Main/Action" index="0"]
+script = ExtResource("8_fbjcd")
+to = NodePath("../Dash")
+event = &"dash_input"
+delay_in_seconds = "0.0"
+
+[node name="Idle" type="Node" parent="StateChart/Main/Action" index="1"]
 script = ExtResource("7_ak7fh")
 
-[node name="MovementInput" type="Node" parent="StateChart/Behavior/Idle" index="0"]
+[node name="MovementInput" type="Node" parent="StateChart/Main/Action/Idle" index="0"]
 script = ExtResource("8_fbjcd")
-to = NodePath("../../Running")
+to = NodePath("../../Run")
 event = &"movement_input"
 delay_in_seconds = "0.0"
 
-[node name="Running" type="Node" parent="StateChart/Behavior" index="1"]
+[node name="Run" type="Node" parent="StateChart/Main/Action" index="2"]
 script = ExtResource("7_ak7fh")
 
-[node name="NoMovementInput" type="Node" parent="StateChart/Behavior/Running" index="0"]
+[node name="NoMovementInput" type="Node" parent="StateChart/Main/Action/Run" index="0"]
 script = ExtResource("8_fbjcd")
 to = NodePath("../../Idle")
 event = &"no_movement_input"
 delay_in_seconds = "0.0"
 
-[connection signal="state_entered" from="StateChart/Behavior/Idle" to="." method="_on_idle_state_entered"]
-[connection signal="state_entered" from="StateChart/Behavior/Running" to="." method="_on_running_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Behavior/Running" to="." method="_on_running_state_physics_processing"]
+[node name="Dash" type="Node" parent="StateChart/Main/Action" index="3"]
+script = ExtResource("7_ak7fh")
+
+[node name="EndTimer" type="Node" parent="StateChart/Main/Action/Dash" index="0"]
+script = ExtResource("8_fbjcd")
+to = NodePath("../../Run")
+delay_in_seconds = "0.2"
+
+[node name="DashStatus" type="Node" parent="StateChart/Main" index="1"]
+script = ExtResource("6_oq7h7")
+initial_state = NodePath("CanDash")
+
+[node name="CanDash" type="Node" parent="StateChart/Main/DashStatus" index="0"]
+script = ExtResource("7_ak7fh")
+
+[node name="Transition" type="Node" parent="StateChart/Main/DashStatus/CanDash" index="0"]
+script = ExtResource("8_fbjcd")
+to = NodePath("../../Cooldown")
+event = &"dash_input"
+delay_in_seconds = "0.0"
+
+[node name="Cooldown" type="Node" parent="StateChart/Main/DashStatus" index="1"]
+script = ExtResource("7_ak7fh")
+
+[node name="Transition" type="Node" parent="StateChart/Main/DashStatus/Cooldown" index="0"]
+script = ExtResource("8_fbjcd")
+to = NodePath("../../CanDash")
+delay_in_seconds = "1.0"
+
+[connection signal="state_entered" from="StateChart/Main/Action/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_processing" from="StateChart/Main/Action/Idle" to="." method="_on_idle_state_processing"]
+[connection signal="state_entered" from="StateChart/Main/Action/Run" to="." method="_on_running_state_entered"]
+[connection signal="state_processing" from="StateChart/Main/Action/Run" to="." method="_on_running_state_processing"]
+[connection signal="state_entered" from="StateChart/Main/Action/Dash" to="." method="_on_dash_state_entered"]
+[connection signal="state_exited" from="StateChart/Main/Action/Dash" to="." method="_on_dash_state_exited"]
+[connection signal="state_entered" from="StateChart/Main/DashStatus/CanDash" to="." method="_on_can_dash_state_entered"]
+[connection signal="state_input" from="StateChart/Main/DashStatus/CanDash" to="." method="_on_can_dash_state_input"]
+[connection signal="state_entered" from="StateChart/Main/DashStatus/Cooldown" to="." method="_on_cooldown_state_entered"]

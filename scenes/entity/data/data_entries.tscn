@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ij3b5rvfwdad"]
+
+[ext_resource type="Script" uid="uid://c7qg4u2v8lcv7" path="res://scenes/entity/data/data_entries.gd" id="1_ce5ua"]
+
+[node name="DataEntries" type="Label"]
+script = ExtResource("1_ce5ua")

@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Universal="*res://universal.gd"
+Universal="*res://debug/universal.gd"
 
 [display]
 
@@ -31,6 +31,7 @@ enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
 folder_colors={
 "res://addons/": "yellow",
+"res://debug/": "pink",
 "res://fonts/": "green",
 "res://images/": "teal",
 "res://music/": "purple",
