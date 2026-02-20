@@ -14,3 +14,8 @@ func _ready() -> void:
 	
 	set_motion_mode(MOTION_MODE_FLOATING) # set top-down physics
 	add_child(data_entries) # stores data labels
+	
+	if Universal.entity_collision_circles:
+		var render_circle = Node2D.new()
+		render_circle.set_script(load("res://scenes/debug/render_entity_collision_circle.gd"))
+		add_child(render_circle)

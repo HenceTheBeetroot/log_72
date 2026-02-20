@@ -1,31 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://d35wa0m6xtyry"]
+[gd_scene format=3 uid="uid://d35wa0m6xtyry"]
 
 [ext_resource type="PackedScene" uid="uid://csiay2we48wfr" path="res://scenes/entity/entity/player/player.tscn" id="1_73pot"]
-[ext_resource type="PackedScene" uid="uid://cubq0dun5b4nv" path="res://scenes/level/levels/debug.tscn" id="2_7ddre"]
+[ext_resource type="PackedScene" uid="uid://b2kkse8lwwlgn" path="res://scenes/level/levels/coldopen.tscn" id="1_nd71p"]
 [ext_resource type="PackedScene" uid="uid://wg6r2a6okgoo" path="res://scenes/entity/entity/test_enemy/test_enemy.tscn" id="4_cwh77"]
 
-[sub_resource type="GDScript" id="GDScript_nd71p"]
-script/source = "extends Node
-class_name LevelMap
-"
+[node name="Level" type="Node" unique_id=1837894736]
 
-[node name="Level" type="Node"]
+[node name="ColdOpen" parent="." unique_id=591011435 instance=ExtResource("1_nd71p")]
 
-[node name="Debug" parent="." instance=ExtResource("2_7ddre")]
-script = SubResource("GDScript_nd71p")
-
-[node name="Player" parent="." instance=ExtResource("1_73pot")]
+[node name="Player" parent="." unique_id=720399130 instance=ExtResource("1_73pot")]
 position = Vector2(22, 68)
 collision_mask = 3
 motion_mode = 0
 platform_on_leave = 0
 platform_floor_layers = 4294967295
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1893789420]
 position_smoothing_enabled = true
 
-[node name="Test_Enemy" parent="." instance=ExtResource("4_cwh77")]
-position = Vector2(136, 159)
+[node name="Test_Enemy" parent="." unique_id=831501750 instance=ExtResource("4_cwh77")]
+position = Vector2(166, 112)
 collision_mask = 3
 motion_mode = 0
 platform_on_leave = 0

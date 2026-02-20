@@ -22,14 +22,20 @@ func _on_entity_tracker_manager_target_removed(_name: Variant) -> void:
 
 # Process state machine
 func _on_target_in_area_state_entered() -> void:
+	speed = MAXSPEED
 	data_entries.set_entry("STATE", "TRACKING_IN_AREA")
+
+func _on_blind_targeting_state_entered() -> void:
+	speed = MAXSPEED
+	data_entries.set_entry("STATE", "BLIND_TARGETING")
 
 func _on_targeting_state_processing(_delta: float) -> void:
 	facing = tracker.get_closest_target().normalized()
 	speed = MAXSPEED
 
 func _on_idle_state_entered() -> void:
+	speed = 0
 	data_entries.set_entry("STATE", "IDLE")
 
-func _on_idle_state_processing(_delta: float) -> void:
-	speed = 0
+func _on_idle_state_processing(delta: float) -> void:
+	tracker.clear_blocked_rays()

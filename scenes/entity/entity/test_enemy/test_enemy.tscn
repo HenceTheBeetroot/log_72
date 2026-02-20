@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://wg6r2a6okgoo"]
+[gd_scene format=3 uid="uid://wg6r2a6okgoo"]
 
 [ext_resource type="PackedScene" uid="uid://du1whc1t3xmsr" path="res://scenes/entity/entity.tscn" id="1_p1mgr"]
 [ext_resource type="Script" uid="uid://bjtyy83mx7gre" path="res://scenes/entity/entity/test_enemy/test_enemy.gd" id="2_ni8nv"]
@@ -14,54 +14,66 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ni8nv"]
 radius = 16.0
 
-[node name="Test_Enemy" node_paths=PackedStringArray("tracker", "state_chart") instance=ExtResource("1_p1mgr")]
+[node name="Test_Enemy" unique_id=1250196265 node_paths=PackedStringArray("tracker", "state_chart") instance=ExtResource("1_p1mgr")]
 wall_min_slide_angle = 0.0872665
 script = ExtResource("2_ni8nv")
 tracker = NodePath("EntityTrackerManager")
 state_chart = NodePath("StateChart")
 
-[node name="HitboxManager" parent="." index="0" instance=ExtResource("2_s7bmi")]
+[node name="HitboxManager" parent="." index="0" unique_id=1115114242 instance=ExtResource("2_s7bmi")]
 shape = SubResource("CircleShape2D_ni8nv")
 
-[node name="EntityTrackerManager" parent="." index="1" node_paths=PackedStringArray("area_interface", "poi_interface") instance=ExtResource("4_jjt7w")]
+[node name="EntityTrackerManager" parent="." index="1" unique_id=1794871872 node_paths=PackedStringArray("area_interface", "poi_interface", "entity") instance=ExtResource("4_jjt7w")]
 area_interface = NodePath("../AreaInterface")
 poi_interface = NodePath("../POIInterface")
+entity = NodePath("..")
 
-[node name="AreaInterface" parent="." index="2" instance=ExtResource("4_ni8nv")]
+[node name="AreaInterface" parent="." index="2" unique_id=1909371243 instance=ExtResource("4_ni8nv")]
 radius = 250.0
 
-[node name="POIInterface" parent="." index="3" instance=ExtResource("5_ksmgp")]
+[node name="POIInterface" parent="." index="3" unique_id=434527017 instance=ExtResource("5_ksmgp")]
 
-[node name="StateChart" type="Node" parent="." index="4"]
+[node name="StateChart" type="Node" parent="." index="4" unique_id=1355289419]
 script = ExtResource("4_ksmgp")
+initial_expression_properties = {
+"direction_exists": true
+}
 metadata/_custom_type_script = "uid://couw105c3bde4"
 
-[node name="Behavior" type="Node" parent="StateChart" index="0"]
+[node name="Behavior" type="Node" parent="StateChart" index="0" unique_id=2006846279]
 script = ExtResource("5_ni8nv")
 initial_state = NodePath("Idle")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
 
-[node name="Idle" type="Node" parent="StateChart/Behavior" index="0"]
-script = ExtResource("6_jjt7w")
-metadata/_custom_type_script = "uid://cytafq8i1y8qm"
-
-[node name="TargetAdded" type="Node" parent="StateChart/Behavior/Idle" index="0"]
+[node name="TargetAdded" type="Node" parent="StateChart/Behavior" index="0" unique_id=473528155]
 script = ExtResource("7_6g4md")
-to = NodePath("../../Targeting")
+to = NodePath("../Targeting")
 event = &"target_added"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
-[node name="Targeting" type="Node" parent="StateChart/Behavior" index="1"]
+[node name="Idle" type="Node" parent="StateChart/Behavior" index="1" unique_id=1736449983]
 script = ExtResource("6_jjt7w")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
-[node name="AllTargetsLost" type="Node" parent="StateChart/Behavior/Targeting" index="0"]
+[node name="Targeting" type="Node" parent="StateChart/Behavior" index="2" unique_id=407559165]
+script = ExtResource("6_jjt7w")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="AllTargetsLostToBlind" type="Node" parent="StateChart/Behavior/Targeting" index="0" unique_id=21893166]
 script = ExtResource("7_6g4md")
-to = NodePath("../../Idle")
+to = NodePath("../../BlindTargeting")
 event = &"all_targets_removed"
 delay_in_seconds = "0.0"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="BlindTargeting" type="Node" parent="StateChart/Behavior" index="3" unique_id=283142948]
+script = ExtResource("6_jjt7w")
+
+[node name="Timeout" type="Node" parent="StateChart/Behavior/BlindTargeting" index="0" unique_id=648791814]
+script = ExtResource("7_6g4md")
+to = NodePath("../../Idle")
+delay_in_seconds = "0.5"
 
 [connection signal="target_added" from="EntityTrackerManager" to="." method="_on_entity_tracker_manager_target_added"]
 [connection signal="target_removed" from="EntityTrackerManager" to="." method="_on_entity_tracker_manager_target_removed"]
@@ -69,3 +81,4 @@ metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 [connection signal="state_processing" from="StateChart/Behavior/Idle" to="." method="_on_idle_state_processing"]
 [connection signal="state_entered" from="StateChart/Behavior/Targeting" to="." method="_on_target_in_area_state_entered"]
 [connection signal="state_processing" from="StateChart/Behavior/Targeting" to="." method="_on_targeting_state_processing"]
+[connection signal="state_entered" from="StateChart/Behavior/BlindTargeting" to="." method="_on_blind_targeting_state_entered"]

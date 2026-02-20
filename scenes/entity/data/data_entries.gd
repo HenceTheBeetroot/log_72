@@ -2,19 +2,22 @@ extends Label
 class_name DataEntries
 
 var entries: Dictionary[String, String]
+var states_map = {
+	"STATE": Universal.show_entity_states
+}
 
 func _ready() -> void:
 	update_text()
 
 func update_text() -> void:
-	text = "\n".join(entries.keys().map(
-		func (key):
-			var debug_states = {
-				"STATE": Universal.show_entity_states
-			}
-			if !debug_states.has(key) or debug_states[key]:
-				return key + " : " + entries[key]
-	))
+	if true not in states_map.values():
+		text = ""
+	else:
+		text = "\n".join(entries.keys().map(
+			func (key):
+				if !states_map.has(key) or states_map[key]:
+					return key + " : " + entries[key]
+		))
 
 func set_entry(key: String, value: String) -> void:
 	if !entries.has(key) or entries[key] != value:

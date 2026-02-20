@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://blsdyf80su4um"]
+
+[ext_resource type="Script" uid="uid://q7xkaoxdb2uf" path="res://scenes/module/interface/entity/poi/poi.gd" id="1_td2tl"]
+
+[node name="POI" type="Node2D" unique_id=1467781059]
+script = ExtResource("1_td2tl")
